@@ -40,30 +40,41 @@ public class Controller implements Initializable {
     @FXML
     private TextField name_text_field;
 
+    private Note workingNote ;
     @FXML
     protected void saveNote(){
-        Note note = new Note();
-        String name = name_text_field.getText();
+        if (workingNote ==  null){
+            workingNote = new Note();
+            workingNote.setFileName("NOTE!");
+        }
         String text = main_text_area.getText();
         String dateTime = DateTimeFormatter.ofPattern("dd_MM_hh_mm_ss_ms")
                 .format(LocalDateTime.now());
 
-        String fileName = name + dateTime;
+        workingNote.setData(text);
+        workingNote.setDate(dateTime);
 
-        note.setData(text);
-        note.setNoteName(name);
-        note.setDate(dateTime);
-        note.setFileName(fileName);
+        new SaveCommand().toSave(workingNote).execute();
+    }
+    @FXML
+    protected void saveNewNote(){
 
-        try{
-            new SaveCommand().toSave(note).execute();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        String name = name_text_field.getText();
+        String text = main_text_area.getText();
+        String dateTime = DateTimeFormatter.ofPattern("dd_MM_hh_mm_ss_ms")
+                .format(LocalDateTime.now());
+        String fileName = name;
 
+        workingNote.setData(text);
+        workingNote.setNoteName(name);
+        workingNote.setDate(dateTime);
+        workingNote.setFileName(fileName);
+
+        new SaveCommand().toSave(workingNote).execute();
     }
     @FXML
     protected void loadNote(){
+        //вызываем меню выбора файла
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open LightNote!");
         fileChooser.setInitialDirectory(new File("notes//"));
@@ -71,16 +82,12 @@ public class Controller implements Initializable {
                 new FileChooser.ExtensionFilter("Light Note (*.lightnote)", "*.lightnote");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(Application.stage);
-        if (file != null) {
-            //Open
-            System.out.println(file.getAbsolutePath());
-            try {
-                Note note = new LoadCommand().toLoad(file).execute().getNote();
-                loadNoteUi(note);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+        //создадим команду загрузки, чтения и получим из команды объект заметки в оперативную память
 
+        workingNote = new LoadCommand().toLoad(file).execute().getNote();
+
+        if(workingNote != null){
+            loadNoteUi(workingNote);
         }
     }
     @FXML

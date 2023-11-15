@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.SortedMap;
 
 public class SaveCommand implements Command{
     private BaseNote note;
@@ -18,24 +19,28 @@ public class SaveCommand implements Command{
         return this;
     }
     @Override
-    public SaveCommand execute() throws IOException {
+    public SaveCommand execute() {
         //код сохранения
-        if (this.note == null){
-            throw new NoNoteToSave();
+        try{
+            if (this.note == null){
+                throw new NoNoteToSave();
+            }
+            String jsonString = JSON.toJSONString(note);
+            File file = new File(relativeway + note.getFileName());
+
+            if (file.createNewFile())
+                System.out.println("File created");
+
+            try (FileWriter fw = new FileWriter(file)){
+                fw.write(jsonString);
+            }
+            System.out.println("Выполнена команда сохранения!");
+        }catch (NoNoteToSave e){
+            System.out.println("Нет заметки для сохранения");
+        }catch (IOException e) {
+            System.out.println("Ошибка при сохранении заметки");
         }
 
-        String jsonString = JSON.toJSONString(note);
-
-        File file = new File(relativeway + note.getFileName());
-
-        if (file.createNewFile())
-            System.out.println("File created");
-
-
-        try (FileWriter fw = new FileWriter(file)){
-            fw.write(jsonString);
-        }
-        System.out.println("Выполнена команда сохранения!");
         return this;
     }
 }

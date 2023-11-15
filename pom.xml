@@ -97,4 +97,11 @@
 
     </plugins>
   </build>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>Git LightNote</name>
+      <url>https://maven.pkg.github.com/ResQkiT/LightNote</url>
+    </repository>
+  </distributionManagement>
 </project>

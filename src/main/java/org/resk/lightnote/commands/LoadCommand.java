@@ -7,6 +7,7 @@ import org.resk.lightnote.exeptions.NoNoteToSave;
 import org.resk.lightnote.model.Note;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.channels.Pipe;
@@ -21,20 +22,29 @@ public class LoadCommand implements Command{
     }
 
     public Note getNote() {
-        return note;
+        return this.note;
     }
 
     @Override
-    public LoadCommand execute() throws IOException {
-        if (this.file == null){
-            throw new NoFileToLoad();
-        }
-        String string;
-        try(FileReader fr = new FileReader(file)) {
-            Scanner scanner = new Scanner(fr);
-            string = scanner.nextLine();
-            this.note = JSON.parseObject(string, Note.class);
-            System.out.println(this.note);
+    public LoadCommand execute(){
+        try {
+            if (this.file == null){
+                throw new NoFileToLoad();
+            }
+            String string;
+            try(FileReader fr = new FileReader(file)) {
+                Scanner scanner = new Scanner(fr);
+                string = scanner.nextLine();
+                this.note = JSON.parseObject(string, Note.class);
+                System.out.println(this.note);
+            }
+
+        } catch (NoFileToLoad e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return this;

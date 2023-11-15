@@ -3,31 +3,52 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="500.0" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"  fx:controller="org.resk.lightnote.MainControllers.Controller">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="500.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.resk.lightnote.MainControllers.Controller">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label prefHeight="18.0" prefWidth="44.0" text="Имя:" />
-            <TextField fx:id="name_text_field" prefHeight="25.0" prefWidth="143.0" />
-            <Label prefHeight="18.0" prefWidth="44.0" text="Дата:" />
-            <Label fx:id="date_field" prefHeight="18.0" prefWidth="111.0" />
+            <Label prefHeight="50.0" prefWidth="41.0" text="Имя:" />
+            <TextField fx:id="name_text_field" prefHeight="25.0" prefWidth="163.0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></TextField>
+            <Label prefHeight="47.0" prefWidth="42.0" text="Дата:" />
+            <Label fx:id="date_field" depthTest="DISABLE" prefHeight="49.0" prefWidth="198.0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></Label>
          </children>
       </HBox>
       <TextArea fx:id="main_text_area" prefHeight="546.0" prefWidth="442.0">
          <contextMenu>
             <ContextMenu>
               <items>
-                <MenuItem fx:id="save_menu_button" mnemonicParsing="false" onAction="#saveNote" text="Сохранить" />
+                  <Menu mnemonicParsing="false" text="Соохранить изменения">
+                    <items>
+                      <MenuItem fx:id="save_menu_button" mnemonicParsing="false" onAction="#saveNote" text="Сохранить изменения" />
+                      <MenuItem fx:id="save_new_menu_button" mnemonicParsing="false" onAction="#saveNewNote" text="Сохранить новую заметку" />
+                    </items>
+                  </Menu>
+                <SeparatorMenuItem mnemonicParsing="false" />
                 <MenuItem fx:id="load_menu_button" mnemonicParsing="false" onAction="#loadNote" text="Открыть" />
+                  <MenuItem mnemonicParsing="false" text="Удалить заметку" />
 
               </items>
             </ContextMenu>

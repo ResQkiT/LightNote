@@ -65,4 +65,5 @@ public class Note implements BaseNote{
                 ", data='" + data + '\'' +
                 '}';
     }
+
 }
