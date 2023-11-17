@@ -40,24 +40,9 @@ public class Controller implements Initializable {
     @FXML
     private TextField name_text_field;
 
-    private Note workingNote ;
+    private Note workingNote = new Note();
     @FXML
     protected void saveNote(){
-        if (workingNote ==  null){
-            workingNote = new Note();
-            workingNote.setFileName("NOTE!");
-        }
-        String text = main_text_area.getText();
-        String dateTime = DateTimeFormatter.ofPattern("dd_MM_hh_mm_ss_ms")
-                .format(LocalDateTime.now());
-
-        workingNote.setData(text);
-        workingNote.setDate(dateTime);
-
-        new SaveCommand().toSave(workingNote).execute();
-    }
-    @FXML
-    protected void saveNewNote(){
 
         String name = name_text_field.getText();
         String text = main_text_area.getText();

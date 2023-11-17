@@ -40,13 +40,8 @@
          <contextMenu>
             <ContextMenu>
               <items>
-                  <Menu mnemonicParsing="false" text="Соохранить изменения">
-                    <items>
-                      <MenuItem fx:id="save_menu_button" mnemonicParsing="false" onAction="#saveNote" text="Сохранить изменения" />
-                      <MenuItem fx:id="save_new_menu_button" mnemonicParsing="false" onAction="#saveNewNote" text="Сохранить новую заметку" />
-                    </items>
-                  </Menu>
-                <SeparatorMenuItem mnemonicParsing="false" />
+
+                  <MenuItem fx:id="save_menu_button" mnemonicParsing="false" onAction="#saveNote" text="Сохранить изменения" />
                 <MenuItem fx:id="load_menu_button" mnemonicParsing="false" onAction="#loadNote" text="Открыть" />
                   <MenuItem mnemonicParsing="false" text="Удалить заметку" />
 
