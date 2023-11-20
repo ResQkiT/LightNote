@@ -5,11 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
-
+    public static final Logger logger = LogManager.getLogger();
     public static Stage stage;
     @Override
     public void start(Stage stage) throws IOException {
@@ -21,6 +24,7 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         stage.show();
 
+        logger.info("Application run!");
     }
 
     public static void main(String[] args) {
@@ -30,9 +34,9 @@ public class Application extends javafx.application.Application {
         File folder = new File("notes" );
         if (!folder.exists()) {
             folder.mkdir();
-            System.out.println("Папка создана");
+            logger.info("Создана директория /notes");
         }else{
-            System.out.println("папка не создана");
+            logger.info("Директория /notes не создана, она уже существует");
         }
     }
 }

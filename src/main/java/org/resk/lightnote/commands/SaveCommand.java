@@ -3,13 +3,12 @@ package org.resk.lightnote.commands;
 import com.alibaba.fastjson.JSON;
 import org.resk.lightnote.exeptions.NoNoteToSave;
 import org.resk.lightnote.model.BaseNote;
-import org.resk.lightnote.model.Note;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.SortedMap;
+
+import static org.resk.lightnote.Application.logger;
 
 public class SaveCommand implements Command{
     private BaseNote note;
@@ -20,25 +19,22 @@ public class SaveCommand implements Command{
     }
     @Override
     public SaveCommand execute() {
-        //код сохранения
         try{
             if (this.note == null){
                 throw new NoNoteToSave();
             }
             String jsonString = JSON.toJSONString(note);
-            File file = new File(relativeway + note.getFileName());
-
-            if (file.createNewFile())
-                System.out.println("File created");
+            File file = new File(relativeway + note.getFullFileName());
 
             try (FileWriter fw = new FileWriter(file)){
                 fw.write(jsonString);
             }
-            System.out.println("Выполнена команда сохранения!");
+            logger.info("Команда сохранения выполнена успешно");
+
         }catch (NoNoteToSave e){
-            System.out.println("Нет заметки для сохранения");
+            logger.info(e.toString());
         }catch (IOException e) {
-            System.out.println("Ошибка при сохранении заметки");
+            logger.warn("Ошибка ввода - вывода");
         }
 
         return this;

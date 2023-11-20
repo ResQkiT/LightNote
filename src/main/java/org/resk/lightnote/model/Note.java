@@ -1,10 +1,6 @@
 package org.resk.lightnote.model;
 
 public class Note implements BaseNote{
-    @Override
-    public void getJSON() {
-
-    }
     private String fileName;
     private String noteName;
     private String date;
@@ -42,6 +38,10 @@ public class Note implements BaseNote{
     }
     @Override
     public String getFileName() {
+        return fileName;
+    }
+    @Override
+    public String getFullFileName() {
         return fileName + ".lightnote";
     }
 
@@ -66,4 +66,13 @@ public class Note implements BaseNote{
                 '}';
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Note note = new Note();
+        note.setFileName(this.fileName);
+        note.setNoteName(this.noteName);
+        note.setDate(this.date);
+        note.setData(this.data);
+        return note;
+    }
 }

@@ -1,17 +1,16 @@
 package org.resk.lightnote.commands;
 
 import com.alibaba.fastjson.JSON;
-import org.resk.lightnote.MainControllers.Controller;
 import org.resk.lightnote.exeptions.NoFileToLoad;
-import org.resk.lightnote.exeptions.NoNoteToSave;
 import org.resk.lightnote.model.Note;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.channels.Pipe;
 import java.util.Scanner;
+
+import static org.resk.lightnote.Application.logger;
 
 public class LoadCommand implements Command{
     private File file;
@@ -20,7 +19,6 @@ public class LoadCommand implements Command{
         this.file = file;
         return this;
     }
-
     public Note getNote() {
         return this.note;
     }
@@ -36,15 +34,14 @@ public class LoadCommand implements Command{
                 Scanner scanner = new Scanner(fr);
                 string = scanner.nextLine();
                 this.note = JSON.parseObject(string, Note.class);
-                System.out.println(this.note);
             }
-
+            logger.info("Команда загрузки заметки выполнена успешно");
         } catch (NoFileToLoad e) {
-            e.printStackTrace();
+            logger.warn(e.toString());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.warn("Фай не найден");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка ввода - вывода");
         }
 
         return this;
