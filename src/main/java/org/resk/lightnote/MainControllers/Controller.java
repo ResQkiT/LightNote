@@ -22,8 +22,6 @@ public class Controller implements Initializable {
     @FXML
     private Label date_field;
     @FXML
-    private MenuItem save_menu_button, load_menu_button;
-    @FXML
     private TextArea main_text_area;
     @FXML
     private TextField name_text_field;
@@ -61,12 +59,21 @@ public class Controller implements Initializable {
             if(workingNote != null){
                 loadNoteUi(workingNote);
             }
-        }catch (Exception e){}
+        }catch (Exception e){
+            //Возникает ошибка, если пользователь закрыл окно выбора файла. на нее не стоит реагировать
+        }
+    }
+    @FXML
+    protected void nameChangedHandler(){
+        workingNote.setNoteName(name_text_field.getText());
+    }
+    @FXML
+    protected void dataTextChangedHandler(){
+        workingNote.setData(main_text_area.getText());
     }
     @FXML
     protected void deleteNote(){
         String deletePath = "notes\\" + workingNote.getFullFileName();
-        System.out.println(deletePath);
         new DeleteCommand().setDeletePath(deletePath).execute();
         this.workingNote = new Note();
         loadNoteUi(this.workingNote);

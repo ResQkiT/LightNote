@@ -18,7 +18,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         initDirectories();
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setTitle("LightNote!");
         stage.setScene(scene);
@@ -32,9 +32,12 @@ public class Application extends javafx.application.Application {
     }
     public static void initDirectories(){
         File folder = new File("notes" );
+        File loggerfolder = new File("logs");
         if (!folder.exists()) {
             folder.mkdir();
+            loggerfolder.mkdir();
             logger.info("Создана директория /notes");
+            logger.info("Создана директория /logs");
         }else{
             logger.info("Директория /notes не создана, она уже существует");
         }
